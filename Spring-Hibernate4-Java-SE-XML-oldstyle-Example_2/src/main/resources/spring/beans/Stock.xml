@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx
+	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Stock business object -->
+	<bean id="stockBo" class="com.mkyong.stock.bo.impl.StockBoImpl">
+		<property name="stockDao" ref="stockDao" />
+	</bean>
+
+	<!-- Stock Data Access Object -->
+   <bean id="stockDao" class="com.mkyong.stock.dao.impl.StockDaoImpl" >
+   		<property name="sessionFactory" ref="sessionFactory"></property>
+   		<property name="transactionManager" ref="txManager"></property>
+   </bean>
+   
+   <bean id="txManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+</beans>

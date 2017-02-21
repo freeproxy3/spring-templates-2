@@ -1,0 +1,46 @@
+package com.mkyong.common;
+
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+
+import com.mkyong.stock.bo.StockBo;
+import com.mkyong.stock.model.Stock;
+
+public class App 
+{
+    public static void main( String[] args ) throws SQLException
+    {
+    	System.out.println("Done===========================");
+    	
+    	ApplicationContext appContext = 
+    		new ClassPathXmlApplicationContext("classpath:spring/config/app-context.xml");
+    		// new ClassPathXmlApplicationContext("classpath:spring/config/app-context-cfg.xml");
+    	
+	
+    	StockBo stockBo = (StockBo)appContext.getBean("stockBo");
+    	
+    	/** insert **/
+    	Stock stock = new Stock();
+    	stock.setStockCode("7668");
+    	stock.setStockName("HAIO");
+    	stockBo.save(stock);
+    	
+    	/** select **/
+    	Stock stock2 = stockBo.findByStockCode("7668");
+    	System.out.println(stock2);
+    	
+    	/** update **/
+    	stock2.setStockName("HAIO-1");
+    	stockBo.update(stock2);
+    	
+    	/** delete **/
+    	stockBo.delete(stock2);
+    	
+    	System.out.println("Done");
+    }
+}
